@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: dynamic-registry
+Version: 0.1.0
+Summary: Dynamically registers the subclasses of a parent at runtime for easy extensibility.
+Home-page: https://git.innova-partners.com/jason-thomas/dynamic-registry
+Author: Jason Thomas
+Author-email: jason.thomas@covermymeds.com
+License: UNKNOWN
+Project-URL: Demo, https://git.innova-partners.com/jason-thomas/extensibility-demo
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# Python Dynamic Registry
+
+Dynamically finds and registers all subclasses of a parent or abstract class. 
+
+
+## Installation 
+
+    `pip install https://git.innova-partners.com/jason-thomas/dynamic-registry`
+
+
+## Usage
+
+Initialization:
+    `
+    from your_class_directory.your_parent_class_module import YourParentClass
+    from dynamic_registry import Registry
+    `
+
+Usage Option 1
+    '
+    class_registry = Registry(YourParentClass)
+    your_subclass_instance = class_registry.YourSubClass()
+    `
+
+Option 2
+    `
+    class_registry = Registry(YourParentClass).registry
+    your_subclass_instance = class_registry['YourSubClass']() 
+    `
+
+
+## Examples 
+
+See https://git.innova-partners.com/jason-thomas/extensibility-demo
+
