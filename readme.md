@@ -6,7 +6,7 @@ Dynamically finds and registers all subclasses of a parent or abstract class.
 
 ## Installation 
 
-    $ pip install https://git.innova-partners.com/jason-thomas/dynamic-registry
+    $ pip install git+https://git.innova-partners.com/jason-thomas/dynamic-registry
 
 
 ## Usage
