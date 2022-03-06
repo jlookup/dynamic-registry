@@ -1,9 +1,13 @@
-"""Test the Registry class in the dynamic_registry package."""
+"""
+Test the Registry class in the dynamic_registry package.
+Must install the package locally in development mode prior to running tests:
+    $ pip install -e .
+"""
 
 import pytest
 
-from dynamic_registry.registry import Registry
-from test_characters.character import Character 
+from characters.character import Character 
+from dynamic_registry import Registry
 
 
 def test_registry_init():
@@ -44,7 +48,7 @@ def test_registry_contains_subclasses(reg, reg2):
 
 def test_init_subclass_via_registry(reg2):
     """Instantiate a subclass from the registry using a few different methods"""
-    from test_characters.character import Knight
+    from characters.character import Knight
 
     def assertions(k):
         assert(k is not None)
