@@ -1,5 +1,5 @@
 """
-Test the Registry class in the dynamic_registry package.
+Test the ClassRegistry class in the dynamic_registry package.
 Must install the package locally in development mode prior to running tests:
     $ pip install -e .
 """
@@ -7,12 +7,12 @@ Must install the package locally in development mode prior to running tests:
 import pytest
 
 from characters.character import Character 
-from dynamic_registry import Registry
+from dynamic_registry import ClassRegistry
 
 
 def test_registry_init():
     """Verify that a registry object is created"""
-    reg = Registry(Character)
+    reg = ClassRegistry(Character)
     assert (reg is not None)
     assert isinstance(reg, object)
 
@@ -20,12 +20,12 @@ def test_registry_init():
 @pytest.fixture(scope='module')
 def reg():
     """Instantiate the Registry object for the Character parent class"""
-    return Registry(Character)  
+    return ClassRegistry(Character)  
 
 @pytest.fixture(scope='module')
 def reg2():
     """Instantiate the Registry object for the Character parent class, with an alias"""
-    return Registry(Character, ['species'])  
+    return ClassRegistry(Character, ['species'])  
 
 
 def test_registry_contains_subclasses(reg, reg2):
@@ -81,11 +81,20 @@ def test_init_sublcass_not_in_registry(reg):
         reg.Wizard
 
 
+def test_registry_init_without_register_parent_dir():
+    """
+    Instantiate the Registry 
+    but don't automatically regsiter
+    from the parent class's directory
+    """
+    reg = ClassRegistry(Character, register_parent_directory=False)
+    assert reg.registry == {}
+
 
 
 if __name__ == '__main__':
-    reg = Registry(Character)
-    reg2 = Registry(Character, ['species'])
+    reg = ClassRegistry(Character)
+    reg2 = ClassRegistry(Character, ['species'])
     k = reg.Knight(name='knight', level='1')
     _ = ''
     

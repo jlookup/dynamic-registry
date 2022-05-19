@@ -16,11 +16,13 @@ class ClassRegistry(Registry):
     Dynamically finds and registers all subclasses of a parent or abstract class. 
     """
 
-    def __init__(self, parent_class, alias_attrs=None):
+    def __init__(self, parent_class, alias_attrs=None, 
+                 register_parent_directory=True):
         self._parent: object = parent_class
         self.alias_attrs = alias_attrs        
         self.registry: Dict = {}
-        self._register_parent_directory()
+        if register_parent_directory: 
+            self._register_parent_directory()
         self._set_registry_alias()
 
 
