@@ -14,7 +14,9 @@ Usage:
     your_subclass_instance = class_registry['YourSubClass']()    
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from .registry import Registry
-__all__ = [Registry]
+from .class_registry import ClassRegistry
+from .function_registry import FunctionRegistry
+__all__ = [Registry, ClassRegistry, FunctionRegistry]
