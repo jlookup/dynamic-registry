@@ -52,14 +52,16 @@ class ClassRegistry(Registry):
 
     #     for (_, module_name, _) in pkgutil.iter_modules([directory]):
     #         # import the module and iterate through its attributes
-    #         module = import_module(f"{directory.stem}.{module_name}")
+    #         package_module = f"{directory.stem}.{module_name}"
+    #         module = import_module(package_module)
 
     #         for attribute_name in dir(module):
     #             attribute = getattr(module, attribute_name)
 
     #             # Check if the attribute is a subclass of the parent class but is not the parent class itself.
     #             if inspect.isclass(attribute) and issubclass(attribute, self._parent) and not attribute == self._parent: 
-    #                 self.register_class(attribute)
+    #                 self.register_attribute(attribute)
+
 
     def _validate_attr_for_registry(self, attribute):
         """
