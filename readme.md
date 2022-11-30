@@ -6,7 +6,7 @@ Dynamically finds and registers all subclasses of a parent or abstract class.
 
 ## Installation 
 
-    $ pip install git+https://git.innova-partners.com/jason-thomas/dynamic-registry
+    $ pip install git+ssh://git@github.com/jlookup/dynamic-registry.git@main
 
 
 ## Usage
@@ -48,4 +48,4 @@ Calling an unregistered class will raise a `KeyError`.
 
 ## Examples 
 
-See https://git.innova-partners.com/jason-thomas/extensibility-demo
+Coming soon
