@@ -48,6 +48,8 @@ class Registry(ABC):
         if directory is None:
             caller_file = inspect.stack()[1].filename
             directory = Path(caller_file).resolve().parent
+        else:
+            directory = Path(directory).resolve()
 
         for (_, module_name, _) in pkgutil.iter_modules([directory]):
             # import the module and iterate through its attributes
