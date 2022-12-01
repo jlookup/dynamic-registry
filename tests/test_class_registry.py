@@ -118,4 +118,5 @@ def test_registry_init_without_register_parent_dir_then_register(
 
 
 if __name__ == '__main__':
-    pytest.main()
+    import pytest 
+    pytest.main([__file__])
