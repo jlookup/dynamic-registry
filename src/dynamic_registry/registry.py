@@ -57,11 +57,11 @@ class Registry(ABC):
                 package_module = f"{directory.stem}.{module_name}"
                 module = import_module(package_module)
 
-                for attribute_name in dir(module):
-                    attribute = getattr(module, attribute_name)
+            for attribute_name in dir(module):
+                attribute = getattr(module, attribute_name)
 
-                    if self._validate_attr_for_registry(attribute):
-                        self.register_attribute(attribute)
+                if self._validate_attr_for_registry(attribute):
+                    self.register_attribute(attribute)
 
 
     @abstractmethod
