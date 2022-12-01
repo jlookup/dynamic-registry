@@ -1,6 +1,7 @@
 
 .vscode/
-dev/data/
 .venv/
+dev/data/
 
 */*.egg-info
+*.pyc
