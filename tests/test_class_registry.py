@@ -11,13 +11,6 @@ from characters.character import Character
 from dynamic_registry import ClassRegistry
 
 
-def test_registry_init():
-    """Verify that a registry object is created"""
-    reg = ClassRegistry(Character)
-    assert (reg is not None)
-    assert isinstance(reg, object)
-
-
 @pytest.fixture(scope='module')
 def reg():
     """Instantiate the Registry object for the Character parent class"""
@@ -26,7 +19,14 @@ def reg():
 @pytest.fixture(scope='module')
 def reg2():
     """Instantiate the Registry object for the Character parent class, with an alias"""
-    return ClassRegistry(Character, ['species'])  
+    return ClassRegistry(Character, ['species']) 
+
+
+def test_registry_init():
+    """Verify that a registry object is created"""
+    reg = ClassRegistry(Character)
+    assert (reg is not None)
+    assert isinstance(reg, object)
 
 
 def test_registry_contains_subclasses(reg, reg2):
@@ -92,14 +92,16 @@ def test_registry_init_without_register_parent_dir():
     assert reg.registry == {}
 
 
-def test_registry_init_without_register_parent_dir_then_register():
+def test_registry_init_without_register_parent_dir_then_register(
+    reg2: Character
+):
     """
     Instantiate the Registry 
     but don't automatically regsiter
     from the parent class's directory
     """
     reg = ClassRegistry(Character, register_parent_directory=False)
-    reg.register_directory('src/tests/characters')
+    reg.register_directory(u.TEST_DIR / 'characters')
 
     # Knight, Orc, Elf
     assert (len(reg.registry) == 3)
