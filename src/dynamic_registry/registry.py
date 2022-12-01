@@ -51,7 +51,7 @@ class Registry(ABC):
         else:
             directory = Path(directory).resolve()
 
-        for (_, module_name, ispkg) in pkgutil.iter_modules([directory]):
+        for (_, module_name, ispkg) in pkgutil.iter_modules([directory.__str__()]):
             # import the module and iterate through its attributes
             if not ispkg:
                 package_module = f"{directory.stem}.{module_name}"
