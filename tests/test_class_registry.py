@@ -6,6 +6,7 @@ Must install the package locally in development mode prior to running tests:
 
 import pytest
 
+import testing_utils as u
 from characters.character import Character 
 from dynamic_registry import ClassRegistry
 
@@ -112,3 +113,7 @@ def test_registry_init_without_register_parent_dir_then_register():
 
     assert (issubclass(reg.registry['Knight'], Character))
     assert (issubclass(reg.registry['Knight'], reg.parent))
+
+
+if __name__ == '__main__':
+    pytest.main()
