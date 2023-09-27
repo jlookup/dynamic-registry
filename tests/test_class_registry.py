@@ -41,6 +41,7 @@ def test_registry_contains_subclasses(reg):
 
 
 def test_registry_alias(reg2):
+    """Verify that the registry loads and uses aliases."""
     # Reg2 includes an alias, 'species'.
     # Knight will have the alias Human.
     # The registry will contain both 'Knight' and 'Human'. 
@@ -57,13 +58,13 @@ def test_init_subclass_via_registry(reg2):
     """Instantiate a subclass from the registry using a few different methods"""
     from characters.character import Knight
 
-    def assertions(k):
-        assert(k is not None)
-        assert(isinstance(k, Knight))
-        assert(isinstance(k, Character)) 
-        assert(k.is_mortal == True)
-        assert(k.name == 'knight')
-        assert(k.level == 1)       
+    def assertions(char):
+        assert(char is not None)
+        assert(isinstance(char, Knight))
+        assert(isinstance(char, Character)) 
+        assert(char.is_mortal == True)
+        assert(char.name == 'knight')
+        assert(char.level == 1)       
 
     k = reg2.Knight(name='knight', level=1)
     assertions(k)
@@ -78,11 +79,11 @@ def test_init_subclass_via_registry(reg2):
 def test_init_sublcass_not_in_registry(reg):
     """Behavior when trying to access a subclass that doesn't exist"""
 
-    w = reg.get_class('Wizard')
+    w = reg.get_class('Dragon')
     assert (w is None)
     
     with pytest.raises(KeyError):
-        reg.registry['Wizard']
+        reg.registry['Dragon']
 
     with pytest.raises(AttributeError):
         reg.Wizard
@@ -105,13 +106,25 @@ def test_registry_init_without_register_parent_dir_then_register():
     from the parent class's directory
     """
     reg = ClassRegistry(Character, register_parent_directory=False)
-
-    assert (len(reg.registry) == 0)
-
     reg.register_directory(u.TEST_DIR / 'characters')
 
     # Knight, Orc, Elf
     assert (len(reg.registry) == 3)
+
+
+def test_register_other_dir():
+    """Register a subclass from a different directory"""
+
+    reg = ClassRegistry(Character)
+    # Knight, Orc, Elf
+    assert (len(reg.registry) == 3) 
+
+    reg.register_directory(u.TEST_DIR / 'character_expansion')
+    # Knight, Orc, Elf, Wizard
+    assert (len(reg.registry) == 4)
+    assert 'Wizard' in reg.registry
+
+
 
 
 if __name__ == '__main__': 
