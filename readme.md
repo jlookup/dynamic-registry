@@ -2,7 +2,7 @@
 
 Creates a registry of subclasses of a parent or abstract class at runtime.
 
-New subclasses can be imported and made available _without changes to application code_. Simply create it in a new or existing module in a predifined directory. At runtime the new subclass will be discovered, registered, and imported.
+New subclasses can be imported and made available _without changes to application code_. New subclasses are added to a new or existing module in a predifined directory. At runtime the new subclass will be discovered, registered, and imported.
 
 Dynamic Registry is a way to implement the [Liskov Substitution Principle](https://en.wikipedia.org/wiki/Liskov_substitution_principle) and the [Dependency Inversion Priciple](https://en.wikipedia.org/wiki/Dependency_inversion_principle) of Robert Martin's [SOLID](https://en.wikipedia.org/wiki/SOLID).
 
@@ -20,7 +20,8 @@ Dynamic Registry is a way to implement the [Liskov Substitution Principle](https
 Imagine a game with multiple character types. We want the ability to add new characters via expansion packs without altering the game code. 
 
 ### Initialization
-A registry must have a type. The type is the parent or abstract class, which is passed at initialzation. We'll pass it the Character abstract class.
+A registry must have a type. The type is the parent or abstract class, which is passed at initialzation. We'll pass it the `Character` abstract class.
+
     from dynamic_registry import ClassRegistry    
     from characters.character import Character
 
@@ -31,7 +32,7 @@ To register child classes we call `register_directory()` and pass the directory 
 
     character_registry.register_directory('expansion_packs')
 
-This is done at the directory level for maximum flexibility. Only the directory(ies) where child classes could be located has to be hardcoded at compile time. Within those directories new modules can be added or existing ones modified, and the changes will be picked up at runtime. 
+This is done at the directory level for maximum flexibility. Only the directories where child classes are currently located or could be added have to be hardcoded at compile time. Within those directories new modules can be added or existing ones modified, and the changes will be picked up at runtime. 
 
 **Note:** for thoroughness the registration search is **recursive**; it evaluates all classes in all python modules in the given directory, and could be slow. 
 
