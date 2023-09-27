@@ -39,30 +39,6 @@ class ClassRegistry(Registry):
         pass
 
 
-    # def register_directory(self, directory=None):
-    #     """
-    #     Register all subclasses of the parent class
-    #     located in the given directory.
-    #     """
-    #     # If no directory is passed we default to the directory 
-    #     # where the calling function is located
-    #     if directory is None:
-    #         caller_file = inspect.stack()[1].filename
-    #         directory = Path(caller_file).resolve().parent
-
-    #     for (_, module_name, _) in pkgutil.iter_modules([directory]):
-    #         # import the module and iterate through its attributes
-    #         package_module = f"{directory.stem}.{module_name}"
-    #         module = import_module(package_module)
-
-    #         for attribute_name in dir(module):
-    #             attribute = getattr(module, attribute_name)
-
-    #             # Check if the attribute is a subclass of the parent class but is not the parent class itself.
-    #             if inspect.isclass(attribute) and issubclass(attribute, self._parent) and not attribute == self._parent: 
-    #                 self.register_attribute(attribute)
-
-
     def _validate_attr_for_registry(self, attribute):
         """
         Validator to check if an attribute (class, function, or variable) of a module
@@ -73,35 +49,6 @@ class ClassRegistry(Registry):
         if inspect.isclass(attribute) and issubclass(attribute, self._parent) and not attribute == self._parent: 
             return True
         return False
-
-
-    # def register_class(self, subclass):
-        # """Register a single class, using its class name and any aliases"""
-        # pointer = subclass.__name__
-        # self._set_registry_item(subclass, pointer)
-
-        # # Optional aliases to add to the regsitry
-        # if self.alias_attrs is not None:
-        #     for attr in self.alias_attrs:
-        #         if hasattr(subclass, attr) \
-        #         and getattr(subclass, attr) is not None: 
-        #             pointer = getattr(subclass, attr)
-        #             self._set_registry_item(subclass, pointer)
-
-
-    # def _set_registry_item(self, subclass, pointer):
-    #     """ 
-    #     Set the name or alias as an attribute of the Regsitry object 
-    #     and as an element of the registry dict.
-    #     Child of self.register_class()
-    #     """
-    #     # Set the subclass as an attribute of the registry object
-    #     # so it can be called using dot notation.
-    #     self.__setattr__(pointer, subclass) 
-
-    #     # Add the subclass to the registry dictionary
-    #     # so it can be called using registry.registry['subclass_name']       
-    #     self.registry[pointer] = subclass
 
 
     def _set_registry_alias(self):

@@ -17,27 +17,6 @@ class Registry(ABC):
     Dynamically finds and registers all subclasses of a parent or abstract class. 
     """
 
-    # def __init__(self, parent_class, alias_attrs=None):
-    #     self._parent: object = parent_class
-    #     self.alias_attrs = alias_attrs        
-    #     self.registry: Dict = {}
-    #     self._register_parent_directory()
-    #     self._set_registry_alias()
-
-
-    # def _register_parent_directory(self):
-    #     """
-    #     Register all subclasses in the same directory as the parent class.
-    #     Called during init.
-    #     Normally this will be the only regsitration needed.
-    #     """
-    #     parent_module = self._parent.__module__
-    #     parent_file = sys.modules[parent_module].__file__
-    #     parent_directory = Path(parent_file).resolve().parent
-    #     self.register_directory(parent_directory)
-    #     pass
-
-
     def register_directory(self, directory=None):
         """
         Register all subclasses of the parent class
@@ -60,6 +39,7 @@ class Registry(ABC):
             for attribute_name in dir(module):
                 attribute = getattr(module, attribute_name)
 
+                # the validation function is defined by the registry subclass
                 if self._validate_attr_for_registry(attribute):
                     self.register_attribute(attribute)
 
@@ -71,11 +51,6 @@ class Registry(ABC):
         meets the criteria for inclusion in the registry.
         Abstract method. 
         """
-        # subclass registry
-        # Check if the attribute is a subclass of the parent class but is not the parent class itself.
-        # if inspect.isclass(attribute) and issubclass(attribute, self._parent) and not attribute == self._parent: 
-        #     return True
-        # return False
 
 
     def register_attribute(self, attribute):
@@ -103,7 +78,7 @@ class Registry(ABC):
         self.__setattr__(pointer, attribute) 
 
         # Add the subclass to the registry dictionary
-        # so it can be called using registry.registry['subclass_name']       
+        # so it can be called using r.registry['subclass_name']       
         self.registry[pointer] = attribute
 
 
