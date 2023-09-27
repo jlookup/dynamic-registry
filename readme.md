@@ -63,7 +63,7 @@ Each subclass and alias is contained in the `registry` dict of the Registry obje
     my_character = character_registry.registry['YourSubClass']() 
 
 
-### Subclass Aliases
+## Subclass Aliases
 If you want to identify a subclass with something besides its class name you can identify one or more fields to use as an alias. Both the class name and the alias(es) will be registered. Both will point to the same subclass.
 
 If we define an attribute `species` for our Characters:
