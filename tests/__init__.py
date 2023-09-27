@@ -2,5 +2,6 @@
 import sys
 import pathlib 
 
-current_dir = pathlib.Path(__file__).parent
-sys.path.append(current_dir.__str__())
+# Temporarily add test dir to PATH
+CURRENT_DIR = pathlib.Path(__file__).parent
+sys.path.append(CURRENT_DIR.__str__())

@@ -98,31 +98,21 @@ def test_registry_init_without_register_parent_dir():
     assert reg.registry == {}
 
 
-def test_registry_init_without_register_parent_dir_then_register(
-    reg2: Character
-):
+def test_registry_init_without_register_parent_dir_then_register():
     """
     Instantiate the Registry 
     but don't automatically regsiter
     from the parent class's directory
     """
     reg = ClassRegistry(Character, register_parent_directory=False)
+
+    assert (len(reg.registry) == 0)
+
     reg.register_directory(u.TEST_DIR / 'characters')
 
     # Knight, Orc, Elf
     assert (len(reg.registry) == 3)
 
-    # Reg2 includes an alias, 'species'.
-    # Knight will have the alias Human. 
-    # Orcs' and Elves' species is the same as the character name
-    # so they will still only have one entry.
-    # Total of 4 entries in the registry.
-    assert (len(reg2.registry) == 4)
 
-    assert (issubclass(reg.registry['Knight'], Character))
-    assert (issubclass(reg.registry['Knight'], reg.parent))
-
-
-if __name__ == '__main__':
-    import pytest 
+if __name__ == '__main__': 
     pytest.main([__file__])

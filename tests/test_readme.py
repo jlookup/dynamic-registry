@@ -27,5 +27,4 @@ def test_readme():
     your_subclass_instance = class_registry_dict['Knight']('Arthur', 100) 
 
 if __name__ == '__main__':
-    import pytest 
     pytest.main([__file__])
