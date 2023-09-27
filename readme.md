@@ -1,8 +1,12 @@
 # Python Dynamic Registry
 
-Registers subclasses of a parent or abstract class at runtime.
+Creates a registry of subclasses of a parent or abstract class at runtime.
 
-Coming soon: also adding the ability to register functions.
+New subclasses can be imported and made available _without changes to application code_. Simply create it in a new or existing module in a predifined directory. At runtime the new subclass will be discovered, registered, and imported.
+
+Dynamic Registry is a way to implement the [Liskov Substitution Principle](https://en.wikipedia.org/wiki/Liskov_substitution_principle) and the [Dependency Inversion Priciple](https://en.wikipedia.org/wiki/Dependency_inversion_principle) of Robert Martin's [SOLID](https://en.wikipedia.org/wiki/SOLID).
+
+**Future Expansion:** also adding the ability to register functions. 
 
 
 
@@ -11,51 +15,52 @@ Coming soon: also adding the ability to register functions.
     $ pip install git+ssh://git@github.com/jlookup/dynamic-registry.git@main
 
 
-## Usage
+## Usage - ClassRegistry
 
-## ClassRegistry
+Imagine a game with multiple character types. We want the ability to add new characters via expansion packs without altering the game code. 
 
-### Initialization:
-A registry must have a type. The type is the parent or abstract class, which is passed at initialzation. By default, the registry will search the parent class's directory and import all subclasses into the registry. 
+### Initialization
+A registry must have a type. The type is the parent or abstract class, which is passed at initialzation. We'll pass it the Character abstract class.
+    from dynamic_registry import ClassRegistry    
+    from characters.character import Character
 
-    from your_class_directory.your_parent_class_module import YourParentClass
-    from dynamic_registry import ClassRegistry
+    character_registry = ClassRegistry(Character)
 
-    class_registry = ClassRegistry(YourParentClass)
+### Registration
+To register child classes we call `register_directory()` and pass the directory where they are found as a `str` or a `pathlib.Path`.
 
-For thoroughness the search is **recursive**. For large directories this could be slow. 
+    character_registry.register_directory('expansion_packs')
 
-If there are subclasses contained in a different directory you can call `register_directory()` and pass the directory as a `str` or a `pathlib.Path`.
+This is done at the directory level for maximum flexibility. Only the directory(ies) where child classes could be located has to be hardcoded at compile time. Within those directories new modules can be added or existing ones modified, and the changes will be picked up at runtime. 
 
-    class_registry.register_directory('your_other_subclass_directory')
+**Note:** for thoroughness the registration search is **recursive**; it evaluates all classes in all python modules in the given directory, and could be slow. 
+
+By default, at init the registry will call `register_directory()` on the directory where the parent class is located. You can override this by passing `register_parent_directory=False` when creating the registry. In our example, any child classes defined in the `characters` dir will be registered automatically. That includes subclasses located in the same module as the parent class.
 
 ### Referencing Objects in the Registry
-### Option 1 - Safest
+
+There are multiple ways to reference a register class.
+
+### Option 1 - get_class()
 Calling `get_class()` will return `None` if the subclass is not in the registry.
 
-    your_subclass = class_registry.get_class('YourSubClass')
-    if your_subclass is not None:
-        your_subclass_instance = your_subclass()
+    my_character = character_registry.get_class('Elf')
+    if my_character is not None:
+        your_subclass_instance = my_character()
 
 
-### Option 2
+### Option 2 - dot notation
 Each subclass and alias is an attribute of the `Registry` object. 
 
-    your_subclass_instance = class_registry.YourSubClass()
+    my_character = character_registry.Elf()
 
 Calling an unregistered class will raise `AttributeError`.
 
-    your_subclass_instance = class_registry.UnregisteredSubClass()
+    my_character = character_registry.ThisCharacterDoesNotExist()
 
 
-### Option 3
+### Option 3 - registry dictionary
 Each subclass and alias is contained in the `registry` dict of the Registry object. Calling an unregistered class will raise a `KeyError`.
 
-    class_registry_dict = class_registry.registry
-    your_subclass_instance = class_registry_dict['YourSubClass']() 
+    my_character = character_registry.registry['YourSubClass']() 
 
-
-
-## Examples 
-
-Coming soon
