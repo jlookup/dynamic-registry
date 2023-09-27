@@ -28,7 +28,7 @@ A registry must have a type. The type is the parent or abstract class, which is 
     character_registry = ClassRegistry(Character)
 
 ### Registration
-To register child classes we call `register_directory()` and pass the directory where they are found as a `str` or a `pathlib.Path`.
+To discover and register child classes we call `register_directory()` and pass the directory where they are found as a `str` or a `pathlib.Path`.
 
     character_registry.register_directory('expansion_packs')
 
@@ -37,7 +37,13 @@ This is done at the directory level for maximum flexibility. Only the directorie
 **Note:** for thoroughness the registration search is **recursive**; it evaluates all classes in all python modules in the given directory, and could be slow. 
 
 By default, at init the registry will call `register_directory()` on the directory where the parent class is located. You can override this by passing `register_parent_directory=False` when creating the registry. In our example, any child classes defined in the `characters` dir will be registered automatically. That includes subclasses located in the same module as the parent class.
+
+If you have a pointer to a specific subclass you can pass it to `register_attribute()` to add it to the registry. This kind of defeats the purpose of Dynamic Registry, but it already exists for internal usage so it's available if there's a use case. 
      
+    if 'archer' in player.unlocked_characters:
+        from premium_characters.archer import Archer
+        character_registry.register_attribute(Archer)
+
 
 ### Referencing Objects in the Registry
 
