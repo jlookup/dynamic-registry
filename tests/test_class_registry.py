@@ -125,7 +125,5 @@ def test_register_other_dir():
     assert 'Wizard' in reg.registry
 
 
-
-
 if __name__ == '__main__': 
     pytest.main([__file__])
