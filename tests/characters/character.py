@@ -12,7 +12,6 @@ class Character(abc.ABC):
     def __init__(self, name, level):
         self.name = name 
         self.level = level
-        self.is_mortal = self.life.is_mortal()
 
     def __repr__(self):
         """String representation of the character"""
@@ -25,8 +24,12 @@ class Character(abc.ABC):
 
     @property
     @abc.abstractmethod 
+    def is_mortal(self):
+        """Is the character mortal"""
+
     def life(self): 
         """Gives the character's life duration, either mortal or immortal""" 
+        return "Mortal" if self.is_mortal else "Immortal"
 
     def fight(self, other):
         """One character fights another. Whoever has the higher power level wins."""
@@ -42,27 +45,13 @@ class Character(abc.ABC):
             print(f'{self.name} has lost to the {other.species} {other.name}')
 
 
-class Life(abc.ABC):
-    """Abstract class of the charater life duration"""
-    @property
-    @abc.abstractmethod 
-    def is_mortal(self):
-        """Boolean. Tells if the character is mortal or not (immortal)"""
-
-
-class Mortal(Life):
-    def is_mortal(self):
-        return True
-
-
 class Knight(Character):
     """Human character type"""
     species = 'Human'
-    life = Mortal()
+    is_mortal = True
 
 
 class Orc(Character):
     """Orc character type"""
     species = 'Orc'
-    life = Mortal()
-
+    is_mortal = True

@@ -6,8 +6,8 @@ import pytest
 
 def test_readme():
 
-    from characters.character import Character
     from dynamic_registry import ClassRegistry
+    from characters.character import Character
 
     class_registry = ClassRegistry(Character) 
 
